@@ -11,6 +11,9 @@
         MinHeight="700"
         MinWidth="1000">
     <Window.Resources>
+        <local:VisibilityConverter x:Key="visibilityConverter"></local:VisibilityConverter>
+        <local:BackgroundConverter x:Key="backgroundConverter"></local:BackgroundConverter>
+        <local:Superheroe x:Key="superVariable"></local:Superheroe>
         <Style TargetType="TextBlock"
                x:Key="contadoresTextBlock">
             <Setter Property="FontSize"
@@ -62,7 +65,8 @@
     <Grid Margin="5">
         <TabControl>
             <TabItem Header="Ver superhéroes">
-                <Grid x:Name="verSuperheroeGrid">
+                <Grid x:Name="verSuperheroeGrid"
+                      Background="{Binding Heroe, Converter = {StaticResource backgroundConverter}}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60"></RowDefinition>
                         <RowDefinition></RowDefinition>
@@ -83,6 +87,10 @@
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                 Margin="5">
+                        <Image Visibility="{Binding Path=Vengador, Converter={StaticResource visibilityConverter}}"
+                               Source="avengers.png"></Image>
+                        <Image Visibility="{Binding Path=Xmen, Converter={StaticResource visibilityConverter}}"
+                               Source="xmen.png"></Image>
                     </StackPanel>
                     <Image Grid.Row="1"
                            Stretch="Fill"
@@ -91,42 +99,37 @@
                     <StackPanel Grid.Row="2"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Center">
-                        <Button x:Name="retrocederButton"
-                                Click="retrocederButton_Click"
-                                Height="{Binding ElementName=avanzarrImage, Path=Height}">
-                            <Image x:Name="retrocederImage"
-                                   Style="{StaticResource flechasImage}"
-                                   Source="arrow.png"></Image>
-                        </Button>
+                        <Image x:Name="retrocederImage"
+                               MouseLeftButtonDown="retrocederImage_MouseLeftButtonDown"
+                               Style="{StaticResource flechasImage}"
+                               Source="arrow.png"></Image>
                         <TextBlock x:Name="retrocederTextBlock"
                                    Style="{StaticResource contadoresTextBlock}"></TextBlock>
                         <TextBlock Style="{StaticResource contadoresTextBlock}">/</TextBlock>
                         <TextBlock x:Name="avanzarTextBlock"
                                    Style="{StaticResource contadoresTextBlock}"></TextBlock>
-                        <Button x:Name="avanzarButton"
-                                Click="avanzarButton_Click"
-                                Height="{Binding ElementName=avanzarrImage, Path=Height}">
-                            <Image x:Name="avanzarrImage"
-                                   Style="{StaticResource flechasImage}"
-                                   Source="arrow.png"
-                                   RenderTransformOrigin="0.5,0.5">
-                                <Image.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleY="1"
-                                                        ScaleX="-1" />
-                                        <SkewTransform AngleY="0"
-                                                       AngleX="0" />
-                                        <RotateTransform Angle="0" />
-                                        <TranslateTransform />
-                                    </TransformGroup>
-                                </Image.RenderTransform>
-                            </Image>
-                        </Button>
+                        <Image x:Name="avanzarrImage"
+                               Style="{StaticResource flechasImage}"
+                               Source="arrow.png"
+                               MouseLeftButtonDown="avanzarrImage_MouseLeftButtonDown"
+                               RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleY="1"
+                                                    ScaleX="-1" />
+                                    <SkewTransform AngleY="0"
+                                                   AngleX="0" />
+                                    <RotateTransform Angle="0" />
+                                    <TranslateTransform />
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
                     </StackPanel>
                 </Grid>
             </TabItem>
             <TabItem Header="Nuevo superhéroe">
-                <Grid>
+                <Grid x:Name="nuevoSuperheroeGrid"
+                      DataContext="{DynamicResource superVariable}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
@@ -144,7 +147,8 @@
                                    Style="{StaticResource flechasImage}"
                                    ToolTip="Nombre del superhéroes en inglés"></Image>
                         </StackPanel>
-                        <TextBox x:Name="nombreTextBox"></TextBox>
+                        <TextBox x:Name="nombreTextBox"
+                                 Text="{Binding Path=Nombre}"></TextBox>
                     </StackPanel>
                     <StackPanel Grid.Row="1">
                         <StackPanel Orientation="Horizontal">
@@ -153,7 +157,8 @@
                                    Style="{StaticResource flechasImage}"
                                    ToolTip="Imagen del superhéroe en formato cómic"></Image>
                         </StackPanel>
-                        <TextBox x:Name="imagenTextBox"></TextBox>
+                        <TextBox x:Name="imagenTextBox"
+                                 Text="{Binding Path=Imagen}"></TextBox>
                     </StackPanel>
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -163,17 +168,20 @@
                         <Border Grid.Column="0"
                                 Style="{StaticResource gruposBorder}">
                             <StackPanel>
-                                <RadioButton x:Name="heroeRadioButton">Héroe</RadioButton>
+                                <RadioButton x:Name="heroeRadioButton"
+                                             IsChecked="{Binding Path=Heroe}">Héroe</RadioButton>
                                 <RadioButton x:Name="villanoRadioButton"
-                                             Checked="villanoRadioButton_Checked"
-                                             Unchecked="villanoRadioButton_Unchecked">Villano</RadioButton>
+                                             IsChecked="{Binding Path=Villano}">Villano</RadioButton>
                             </StackPanel>
                         </Border>
                         <Border Grid.Column="1"
                                 Style="{StaticResource gruposBorder}">
-                            <StackPanel x:Name="tipoHeroeStackPanel">
-                                <CheckBox x:Name="vengadoresCheckBox">Vengadores</CheckBox>
-                                <CheckBox x:Name="xmenCheckBox">X-men</CheckBox>
+                            <StackPanel x:Name="tipoHeroeStackPanel"
+                                        IsEnabled="{Binding Path=Heroe}">
+                                <CheckBox x:Name="vengadoresCheckBox"
+                                          IsChecked="{Binding Path=Vengador}">Vengadores</CheckBox>
+                                <CheckBox x:Name="xmenCheckBox"
+                                          IsChecked="{Binding Path=Xmen}">X-men</CheckBox>
                             </StackPanel>
                         </Border>
                     </Grid>

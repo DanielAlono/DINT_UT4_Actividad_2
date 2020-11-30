@@ -1,132 +1,141 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-class Superheroe : INotifyPropertyChanged
+namespace UT4_Actividad_2
 {
 
-    private string _nombre;
-
-    public string Nombre
+    class Superheroe : INotifyPropertyChanged
     {
-        get { return this._nombre; }
-        set
+
+        private string _nombre;
+
+        public string Nombre
         {
-            if (this._nombre != value)
+            get { return this._nombre; }
+            set
             {
-                this._nombre = value;
-                this.NotifyPropertyChanged("Nombre");
+                if (this._nombre != value)
+                {
+                    this._nombre = value;
+                    this.NotifyPropertyChanged("Nombre");
+                }
             }
         }
-    }
 
-    private string _imagen;
+        private string _imagen;
 
-    public string Imagen
-    {
-        get { return this._imagen; }
-        set
+        public string Imagen
         {
-            if (this._imagen != value)
+            get { return this._imagen; }
+            set
             {
-                this._imagen = value;
-                this.NotifyPropertyChanged("Imagen");
+                if (this._imagen != value)
+                {
+                    this._imagen = value;
+                    this.NotifyPropertyChanged("Imagen");
+                }
             }
         }
-    }
 
-    private bool _vengador;
+        private bool _vengador;
 
-    public bool Vengador
-    {
-        get { return this._vengador; }
-        set
+        public bool Vengador
         {
-            if (this._vengador != value)
+            get { return this._vengador; }
+            set
             {
-                this._vengador = value;
-                this.NotifyPropertyChanged("Vengador");
+                if (this._vengador != value)
+                {
+                    this._vengador = value;
+                    this.NotifyPropertyChanged("Vengador");
+                }
             }
         }
-    }
 
-    private bool _xmen;
+        private bool _xmen;
 
-    public bool Xmen
-    {
-        get { return this._xmen; }
-        set
+        public bool Xmen
         {
-            if (this._xmen != value)
+            get { return this._xmen; }
+            set
             {
-                this._xmen = value;
-                this.NotifyPropertyChanged("Xmen");
+                if (this._xmen != value)
+                {
+                    this._xmen = value;
+                    this.NotifyPropertyChanged("Xmen");
+                }
             }
         }
-    }
 
-    private bool _heroe;
+        private bool _heroe;
 
-    public bool Heroe
-    {
-        get { return this._heroe; }
-        set
+        public bool Heroe
         {
-            if (this._heroe != value)
+            get { return this._heroe; }
+            set
             {
-                this._heroe = value;
-                this.NotifyPropertyChanged("Heroe");
+                if (this._heroe != value)
+                {
+                    this._heroe = value;
+                    this.NotifyPropertyChanged("Heroe");
+                }
             }
         }
-    }
 
-    private bool _villano;
+        private bool _villano;
 
-    public bool Villano
-    {
-        get { return this._villano; }
-        set
+        public bool Villano
         {
-            if (this._villano != value)
+            get { return this._villano; }
+            set
             {
-                this._villano = value;
-                this.NotifyPropertyChanged("Villano");
+                if (this._villano != value)
+                {
+                    this._villano = value;
+                    if (_villano)
+                    {
+                        Xmen = false;
+                        Vengador= false;
+                    }
+                    this.NotifyPropertyChanged("Villano");
+                }
             }
         }
-    }
 
-    public Superheroe()
-    {
-    }
+        public Superheroe()
+        {
+        }
 
-    public Superheroe(string nombre, string imagen, bool vengador, bool xmen, bool heroe, bool villano)
-    {
-        Nombre = nombre;
-        Imagen = imagen;
-        Vengador = vengador;
-        Xmen = xmen;
-        Heroe = heroe;
-        Villano = villano;
-    }
+        public Superheroe(string nombre, string imagen, bool vengador, bool xmen, bool heroe, bool villano)
+        {
+            Nombre = nombre;
+            Imagen = imagen;
+            Vengador = vengador;
+            Xmen = xmen;
+            Heroe = heroe;
+            Villano = villano;
+        }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-    public void NotifyPropertyChanged(string propertyName)
-    {
-        this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
-    public static List<Superheroe> GetSamples()
-    {
-        List<Superheroe> ejemplos = new List<Superheroe>();
+        public static List<Superheroe> GetSamples()
+        {
+            List<Superheroe> ejemplos = new List<Superheroe>();
 
-        Superheroe ironman = new Superheroe("Ironman", @"https://sm.ign.com/ign_latam/screenshot/default/ybbpqktez5whedr0-1592031889_31aa.jpg", true, false, true, false);
-        Superheroe kingpin = new Superheroe("Kingpin", @"https://www.comicbasics.com/wp-content/uploads/2017/09/Kingpin.jpg", false, false, false, true);
-        Superheroe spiderman = new Superheroe("Spiderman", @"https://wipy.tv/wp-content/uploads/2019/08/destino-de-%E2%80%98Spider-Man%E2%80%99-en-los-Comics.jpg", true, true, true, false);
+            Superheroe ironman = new Superheroe("Ironman", @"https://sm.ign.com/ign_latam/screenshot/default/ybbpqktez5whedr0-1592031889_31aa.jpg", true, false, true, false);
+            Superheroe kingpin = new Superheroe("Kingpin", @"https://www.comicbasics.com/wp-content/uploads/2017/09/Kingpin.jpg", false, false, false, true);
+            Superheroe spiderman = new Superheroe("Spiderman", @"https://wipy.tv/wp-content/uploads/2019/08/destino-de-%E2%80%98Spider-Man%E2%80%99-en-los-Comics.jpg", true, true, true, false);
 
-        ejemplos.Add(ironman);
-        ejemplos.Add(kingpin);
-        ejemplos.Add(spiderman);
+            ejemplos.Add(ironman);
+            ejemplos.Add(kingpin);
+            ejemplos.Add(spiderman);
 
-        return ejemplos;
+            return ejemplos;
+        }
     }
 }
